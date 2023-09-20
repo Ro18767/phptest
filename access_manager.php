@@ -1,5 +1,7 @@
 <?php
 
+$root_dir = getcwd();
+
 $uri = $_SERVER[ 'REQUEST_URI' ] ;  // адреса запиту
 $router = [  // масив у РНР створюється [] або array()
 	'/index' => 'index.php',   // масиви - асоціативні (схожі на об'єкти JS)

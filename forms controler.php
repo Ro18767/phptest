@@ -9,11 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'reg-lastname' => generate_field('reg-lastname'),
 		'reg-email' => generate_field('reg-email'),
 		'reg-phone' => generate_field('reg-phone'),
+		'reg-avatar' => generate_file_field('reg-avatar'),
 	];
 	// оброблення даних форми
 	// echo '<pre>' ; print_r( $_POST ) ; exit ;
 	// етап 1 - валідація
-	{ // reg-name
+
+	; { // reg-name
 		$name = 'reg-name';
 		$value = $form_data[$name]['value'];
 
@@ -24,11 +26,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 	}
 
+	; { // reg-avatar
+		$name = 'reg-avatar';
+		$file = get_file_field_value($name);
+		if (!is_null($file) && $file['error'] == 0 && $file['size'] > 0) {
+			$form_data[$name]['message'] = $root_dir . '/files/' . uniqid('.', true) . pathinfo($file['name'], PATHINFO_EXTENSION);
+			move_uploaded_file(
+				$file['tmp_name'],
+				$root_dir . '/files/' . uniqid('', true) . pathinfo($file['name'], PATHINFO_EXTENSION)
+			);
+		}
+	}
+
 	session_start(); // включення сесії
 	// після включення сесії стає доступним $_SESSION
 	$_SESSION['form_data'] = json_encode($form_data);
 
+
 	header('Location: ' . $_SERVER['REQUEST_URI']);
+
 	exit;
 } else { // запит методом GET
 	// перевіряємо, чи є дані у сесії

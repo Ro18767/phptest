@@ -1,5 +1,5 @@
 <div class="row">
-	<form class="col s12" method="post">
+	<form class="col s12" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<div class="input-field col s6">
 				<i class="material-icons prefix">account_circle</i>
@@ -7,8 +7,8 @@
 					class='<?= $form_data['reg-name']['class'] ?? 'validate' ?>'
 					value='<?= $form_data['reg-name']['value'] ?? '' ?>'>
 				<label for="reg-name">First Name</label>
-				<?php if (isset($name_message)): ?>
-					<span class="helper-text" data-error="<?= $name_message ?>"></span>
+				<?php if (isset($form_data['reg-name']['message']) && $form_data['reg-name']['message'] !== ''): ?>
+					<span class="helper-text" data-error="<?= $form_data['reg-name']['message'] ?>"></span>
 				<?php endif ?>
 			</div>
 			<div class="input-field col s6">
@@ -34,6 +34,21 @@
 					value="<?= $form_data['reg-phone']['value'] ?? '' ?>">
 				<label for="reg-phone">Telephone</label>
 			</div>
+		</div>
+
+		<div class="row">
+			<div class="file-field input-field">
+				<div class="btn orange">
+					<span>File</span>
+					<input type="file" name="reg-avatar">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text" placeholder="Виберіть Аватар">
+				</div>
+			</div>
+			<?php if (isset($form_data['reg-avatar']['message']) && $form_data['reg-avatar']['message'] !== ''): ?>
+				<span class="helper-text" data-error="<?= $form_data['reg-avatar']['message'] ?>"></span>
+			<?php endif ?>
 		</div>
 		<div class="row center-align">
 			<button class="waves-effect waves-light btn orange darken-3">
