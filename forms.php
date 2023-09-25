@@ -17,6 +17,9 @@
 					class="<?= $form_data['reg-lastname']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-lastname']['value'] ?? '' ?>">
 				<label for="reg-lastname">Last Name</label>
+				<?php if (isset($form_data['reg-lastname']['message']) && $form_data['reg-lastname']['message'] !== ''): ?>
+					<span class="helper-text" data-error="<?= $form_data['reg-lastname']['message'] ?>"></span>
+				<?php endif ?>
 			</div>
 		</div>
 		<div class="row">
@@ -26,6 +29,9 @@
 					class="<?= $form_data['reg-email']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-email']['value'] ?? '' ?>">
 				<label for="reg-email">Email</label>
+				<?php if (isset($form_data['reg-email']['message']) && $form_data['reg-email']['message'] !== ''): ?>
+					<span class="helper-text" data-error="<?= $form_data['reg-email']['message'] ?>"></span>
+				<?php endif ?>
 			</div>
 			<div class="input-field col s6">
 				<i class="material-icons prefix">phone</i>
@@ -33,6 +39,9 @@
 					class="<?= $form_data['reg-phone']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-phone']['value'] ?? '' ?>">
 				<label for="reg-phone">Telephone</label>
+				<?php if (isset($form_data['reg-phone']['message']) && $form_data['reg-phone']['message'] !== ''): ?>
+					<span class="helper-text" data-error="<?= $form_data['reg-phone']['message'] ?>"></span>
+				<?php endif ?>
 			</div>
 		</div>
 
@@ -46,9 +55,6 @@
 					<input class="file-path validate" type="text" placeholder="Виберіть Аватар">
 				</div>
 			</div>
-			<?php if (isset($form_data['reg-avatar']['message']) && $form_data['reg-avatar']['message'] !== ''): ?>
-				<span class="helper-text" data-error="<?= $form_data['reg-avatar']['message'] ?>"></span>
-			<?php endif ?>
 		</div>
 		<div class="row center-align">
 			<button class="waves-effect waves-light btn orange darken-3">
