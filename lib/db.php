@@ -2,12 +2,49 @@
 
 // виконання запиту
 try {
-    $res = $db->query("SELECT CURRENT_TIMESTAMP");
-    $row = $res->fetch();
-    print_r($row);
+    $res = $db->query("SELECT CURRENT_TIMESTAMP UNION SELECT CURRENT_DATE UNION SELECT 1");
+    ?>
+    <div class="row">
+        <div class="col s12 m7">
+            <div class="card">
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CURRENT_TIMESTAMP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <?= $res->fetch(PDO::FETCH_COLUMN) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <?= $res->fetch(PDO::FETCH_COLUMN) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <?= $res->fetch(PDO::FETCH_COLUMN) ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <?php
+
 } catch (PDOException $ex) {
     echo $ex->getMessage();
 }
+
+
 
 // https://www.ietf.org/rfc/rfc2898.txt
 $sql = <<<SQL
