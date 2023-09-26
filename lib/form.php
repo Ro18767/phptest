@@ -3,7 +3,7 @@ function generate_field($name)
 {
     return [
         'name' => $name,
-        'value' => $_POST[$name] ?? null,
+        'value' => trim($_POST[$name]) ?? null,
         'message' => '',
     ];
 }

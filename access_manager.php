@@ -2,6 +2,16 @@
 
 $root_dir = getcwd();
 
+$db = new PDO(
+    "mysql:host=localhost;dbname=pv111;charset=UTF8",
+    "pv111_user",
+    "pv111_pass"
+);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_PERSISTENT, true);
+
+
 $uri = $_SERVER[ 'REQUEST_URI' ] ;  // адреса запиту
 
 
@@ -44,7 +54,7 @@ $router = [  // масив у РНР створюється [] або array()
 	'/about' => 'about.php',
 	'/forms' => 'forms controler.php',
 ] ;
-$router[ '/db' ] = 'db.php' ;  // доповнення масиву новим елементом
+$router[ '/db' ] = 'lib/db.php' ;  // доповнення масиву новим елементом
 if( isset( $router[$uri] ) ) {
 	if( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {  // робота з формами
 		include $router[$uri] ;  // без шаблону - на файл

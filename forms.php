@@ -6,7 +6,7 @@
 				<input id="reg-name" name="reg-name" type="text"
 					class='<?= $form_data['reg-name']['class'] ?? 'validate' ?>'
 					value='<?= $form_data['reg-name']['value'] ?? '' ?>'>
-				<label for="reg-name">First Name</label>
+				<label for="reg-name">login</label>
 				<?php if (isset($form_data['reg-name']['message']) && $form_data['reg-name']['message'] !== ''): ?>
 					<span class="helper-text" data-error="<?= $form_data['reg-name']['message'] ?>"></span>
 				<?php endif ?>
@@ -16,7 +16,7 @@
 				<input id="reg-lastname" name="reg-lastname" type="text"
 					class="<?= $form_data['reg-lastname']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-lastname']['value'] ?? '' ?>">
-				<label for="reg-lastname">Last Name</label>
+				<label for="reg-lastname">Name</label>
 				<?php if (isset($form_data['reg-lastname']['message']) && $form_data['reg-lastname']['message'] !== ''): ?>
 					<span class="helper-text" data-error="<?= $form_data['reg-lastname']['message'] ?>"></span>
 				<?php endif ?>
@@ -24,7 +24,7 @@
 		</div>
 		<div class="row">
 			<div class="input-field col s6">
-				<i class="material-icons prefix">mark_email_unread</i>
+				<i class="material-icons prefix">account_circle</i>
 				<input id="reg-email" name="reg-email" type="email"
 					class="<?= $form_data['reg-email']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-email']['value'] ?? '' ?>">
@@ -34,8 +34,8 @@
 				<?php endif ?>
 			</div>
 			<div class="input-field col s6">
-				<i class="material-icons prefix">phone</i>
-				<input id="reg-phone" name="reg-phone" type="tel"
+				<i class="material-icons prefix">pin</i>
+				<input id="reg-phone" name="reg-phone" type="password"
 					class="<?= $form_data['reg-phone']['class'] ?? 'validate' ?>"
 					value="<?= $form_data['reg-phone']['value'] ?? '' ?>">
 				<label for="reg-phone">Telephone</label>
