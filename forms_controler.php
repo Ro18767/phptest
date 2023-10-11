@@ -16,22 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// echo '<pre>' ; print_r( $_POST ) ; exit ;
 	// етап 1 - валідація
 
-	; { // reg-name
-		$name = 'reg-name';
-		$value = $form_data[$name]['value'];
-
-		if (is_null($value)) { // наявність самих даних
-			$form_data[$name]['message'] = "No reg-name field";
-		} else if (strlen($value) < 2) {
-			$form_data[$name]['message'] = "Name too short";
-		}
-	}
-
-	; { // reg-lastname
-		$name = 'reg-lastname';
-		$value = $form_data[$name]['value'];
-
-	}
 
 	; { // reg-email
 		$name = 'reg-email';
@@ -69,41 +53,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (empty($db)) {
 
 			echo 'Server error';
-	
+
 			exit;
-	
+
 		}
 
-		$DBNULL = $db->quote(null, PDO::PARAM_NULL);
 
-		$login = !empty($form_data['reg-name']['value']) ? $db->quote($form_data['reg-name']['value']) : $DBNULL;
+		$login = !empty($form_data['reg-name']['value']) ? $form_data['reg-name']['value'] : null;
 
-		$name = !empty($form_data['reg-lastname']['value']) ? $db->quote($form_data['reg-lastname']['value']) : $DBNULL;
+		$name = !empty($form_data['reg-lastname']['value']) ? $form_data['reg-lastname']['value'] : null;
 
-		$password = !empty($form_data['reg-phone']['value']) ? $db->quote($form_data['reg-phone']['value']) : $DBNULL;
+		$password = !empty($form_data['reg-phone']['value']) ? $form_data['reg-phone']['value'] : null;
 
-		$email = !empty($form_data['reg-email']['value']) ? $db->quote($form_data['reg-email']['value']) : $DBNULL;
-		$avatar = !empty($path) ? $db->quote($path) : $DBNULL;
+		$email = !empty($form_data['reg-email']['value']) ? $form_data['reg-email']['value'] : null;
+		$avatar = !empty($path) ? $path : null;
 
-		$salt = $db->quote(substr(md5(uniqid()), 0, 16));
-		$dk = $db->quote(sha1($salt . md5($password)));
+		$salt = substr(md5(uniqid()), 0, 16);
+		$dk = sha1($salt . md5($form_data['reg-phone']['value']));
 
 		$sql = <<<SQL
 INSERT INTO users ( `id`, `login`, `salt`, `pass_dk`, `name`, `email`, `avatar`) 
 VALUES(
 	UUID_SHORT(),
-	{$login},
-	{$salt},
-	{$dk},
-	{$name},
-	{$email},
-	{$avatar} 
+	?,
+	?,
+	?,
+	?,
+	?,
+	? 
 )
 SQL;
 
 		try {
 
-			$db->query($sql);
+			$db->prepare($sql)->execute([
+				$login,
+				$salt,
+				$dk,
+				$name,
+				$email,
+				$avatar,
+			]);
 
 			header('Location: /');
 
@@ -112,7 +102,7 @@ SQL;
 		} catch (PDOException $ex) {
 			// $ex->getMessage();
 		}
-		
+
 	}
 
 	session_start(); // включення сесії
@@ -124,7 +114,7 @@ SQL;
 
 	exit;
 
-	
+
 } else { // запит методом GET
 	// перевіряємо, чи є дані у сесії
 	session_start(); // включення сесії

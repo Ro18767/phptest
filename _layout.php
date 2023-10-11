@@ -35,13 +35,11 @@ endif;
 					<a href="/db">DB</a>
 				</li>
 				<li>
-
 					<!-- Modal Trigger -->
-					<a class="waves-effect waves-light btn modal-trigger" href="#modal1"><span
-							class="material-icons">login</span></a>
-
+					<a class="waves-effect waves-light btn modal-trigger orange" href="#auth-modal">
+						<i class="material-icons">login</i>
+					</a>
 				</li>
-
 			</ul>
 		</div>
 	</nav>
@@ -51,26 +49,65 @@ endif;
 
 
 	<!-- Modal Structure -->
-	<div id="modal1" class="modal">
+	<div id="auth-modal" class="modal">
 		<div class="modal-content">
-			<h4>Modal Header</h4>
-			<p>A bunch of text</p>
+			<h4>Вхід у систему</h4>
+			<div class="row">
+				<div class="input-field col s6">
+					<i class="material-icons prefix">account_circle</i>
+					<input id="auth-login" name="auth-login" type="text">
+					<label for="auth-login">Логін</label>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">pin</i>
+					<input id="auth-password" name="auth-password" type="password">
+					<label for="auth-password">Пароль</label>
+				</div>
+			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Закрити</a>
+			<a href="#!" id="auth-button" class="waves-effect waves-green btn-flat">Вхід</a>
 		</div>
 	</div>
 
-
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="module">
+	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			var elems = document.querySelectorAll('.modal');
 			var instances = M.Modal.init(elems, {});
+			const authButton = document.getElementById("auth-button");
+			if (authButton) authButton.addEventListener('click', authClick);
+			else console.error("Element '#auth-button' not found");
 		});
-
-
+		function authClick() {
+			const authLogin = document.getElementById("auth-login");
+			if (!authLogin) throw "Element '#auth-login' not found";
+			const authPassword = document.getElementById("auth-password");
+			if (!authPassword) throw "Element '#auth-password' not found";
+			const login = authLogin.value;
+			const password = authPassword.value;
+			if (login.length == 0) {
+				alert('Введіть логін');
+				return;
+			}
+			let form_data = new FormData();
+			form_data.append('login', login);
+			form_data.append('password', password);
+			fetch(`/auth`, {
+				method: 'POST',
+				body: form_data,
+			}).then(r => {
+				if (r.status === 200) {
+					window.location.href = window.location.pathname;
+				}
+				else {
+					const msg = document.getElementById('auth-rejected-message');
+					msg.style.visibility = 'visible';
+				};
+			});
+		}
 	</script>
 </body>
 
