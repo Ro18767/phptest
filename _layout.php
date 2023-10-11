@@ -34,7 +34,6 @@ endif;
 					echo 'class="active"'; ?>>
 					<a href="/db">DB</a>
 				</li>
-<<<<<<< HEAD
 				<?php if (isset($_CONTEXT['user'])): /* авторизований режим */
 					$avatar = empty($_CONTEXT['user']['avatar'])
 						? 'no_photo.svg'
@@ -59,14 +58,6 @@ endif;
 						</a>
 					</li>
 				<?php endif ?>
-=======
-				<li>
-					<!-- Modal Trigger -->
-					<a class="waves-effect waves-light btn modal-trigger orange" href="#auth-modal">
-						<i class="material-icons">login</i>
-					</a>
-				</li>
->>>>>>> b444c447ce56c41a0e7cdb42e0c212932defb6b3
 			</ul>
 		</div>
 	</nav>
@@ -122,11 +113,8 @@ endif;
 			let form_data = new FormData();
 			form_data.append('login', login);
 			form_data.append('password', password);
-<<<<<<< HEAD
+			
 			fetch(`/login`, {
-=======
-			fetch(`/auth`, {
->>>>>>> b444c447ce56c41a0e7cdb42e0c212932defb6b3
 				method: 'POST',
 				body: form_data,
 			}).then(r => {
