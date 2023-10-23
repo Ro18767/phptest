@@ -11,7 +11,6 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $db->setAttribute(PDO::ATTR_PERSISTENT, true);
 
-
 $uri = $_SERVER[ 'REQUEST_URI' ] ;  // адреса запиту
 $uri_parts = explode( '?', $uri );
 $uri_path_only = $uri_parts[0];
@@ -50,19 +49,20 @@ if( $uri != '/' && is_readable( $path ) ) {
 }
 
 $router = [  // масив у РНР створюється [] або array()
-	'/index' => 'index.php',   // масиви - асоціативні (схожі на об'єкти JS)
-	'/'      => 'index.php',
-	'/about' => 'about.php',
-	'/forms' => 'forms controler.php',
+	'/index'	=> 'index.php',   // масиви - асоціативні (схожі на об'єкти JS)
+	'/'			=> 'index.php',
+	'/about'	=> 'about.php',
+	'/shop'		=> 'shop_controler.php',
+	'/forms'	=> 'forms_controler.php',
 ] ;
 $router[ '/db' ] = 'lib/db.php' ;  // доповнення масиву новим елементом
-if( isset( $router[$uri] ) ) {
+if( isset( $router[$uri_path_only] ) ) {
 	if( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {  // робота з формами
-		include $router[$uri] ;  // без шаблону - на файл
+		include $router[$uri_path_only] ;  // без шаблону - на файл
 	}
 	else {	
 		$page =  // змінні локалізуються тільки у функціях, оголошена поза функцією змінна доступна скрізь, у т.ч. в іншому файлі
-			$router[$uri] ;  // у РНР оператор "+" діє тільки на числа, для рядків - оператор "."
+			$router[$uri_path_only] ;  // у РНР оператор "+" діє тільки на числа, для рядків - оператор "."
 		include '_layout.php' ;  // перехід до інструкцій в іншому файлі
 	}
 }

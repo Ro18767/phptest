@@ -22,6 +22,10 @@ endif;
 		<div class="nav-wrapper orange">
 			<a href="/" class="brand-logo left ">PV-111</a>
 			<ul id="nav-mobile" class="right">
+				<li <?php if ($page == 'shop.php')
+					echo 'class="active"'; ?>>
+					<a href="/shop">Shop</a>
+				</li>
 				<li <?php if ($page == 'about.php')
 					echo 'class="active"'; ?>>
 					<a href="/about">About</a>
@@ -113,7 +117,7 @@ endif;
 			let form_data = new FormData();
 			form_data.append('login', login);
 			form_data.append('password', password);
-			
+
 			fetch(`/login`, {
 				method: 'POST',
 				body: form_data,
